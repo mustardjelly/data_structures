@@ -1,4 +1,4 @@
-from typing import Any, Iterable
+from typing import Any, Iterable, List as TList
 import unittest
 from assets.items import List
 from parameterized import parameterized
@@ -9,14 +9,12 @@ class ListItemsTests(unittest.TestCase):
         [
             (
                 [1, 2, 3],
-                "[1, 2, 3]",
+                "['1', '2', '3']",
             ),
             ([], "[]"),
         ]
     )
-    def test_initialize_works(self, initialize_value: Iterable[Any], expected: str):
-
-        print(initialize_value, expected)
+    def test_initialize_works(self, initialize_value: TList[Any], expected: str):
         my_list: List = List(initialize_value)
 
         self.assertEqual(str(my_list), expected)
