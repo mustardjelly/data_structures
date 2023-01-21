@@ -1,11 +1,11 @@
-from item import SingleItem
-from items import Items
+from assets.item import ListItem
+from assets.items import List
 
 
-def main():
-    si = SingleItem()
-    si2 = SingleItem()
-    si.store_next_item(si2)
+def main() -> None:
+    si: ListItem = ListItem()
+    si2: ListItem = ListItem()
+    si.next(si2)
     assert si.has_next_item()
     # si.add(1)
     #
@@ -13,81 +13,81 @@ def main():
     si.get_added_value()
 
 
-def main2():
-    si = SingleItem()
+def main2() -> None:
+    si: ListItem = ListItem()
     si.add(1)
-    i = Items()
+    i: List = List()
     i.store_head(si)
     result = i.retrieve_head()
 
     print(result)
 
 
-def main3():
-    si1 = SingleItem()
+def main3() -> None:
+    si1: ListItem = ListItem()
     si1.add(1)
-    si2 = SingleItem()
+    si2: ListItem = ListItem()
     si2.add(2)
-    si3 = SingleItem()
+    si3: ListItem = ListItem()
     si3.add(3)
-    si1.store_next_item(si2)
-    si2.store_next_item(si3)
-    i = Items()
+    si1.next(si2)
+    si2.next(si3)
+    i: List = List()
     i.store_head(si1)
     for item in i:
         print(item)
 
 
-def main4():
-    si1 = SingleItem()
+def main4() -> None:
+    si1: ListItem = ListItem()
     si1.add("a")
-    si2 = SingleItem()
+    si2: ListItem = ListItem()
     si2.add("b")
-    si3 = SingleItem()
+    si3: ListItem = ListItem()
     si3.add("c")
-    si4 = SingleItem()
+    si4: ListItem = ListItem()
     si4.add("d")
-    si5 = SingleItem()
+    si5: ListItem = ListItem()
     si5.add("e")
 
-    si1.store_next_item(si2)
-    si2.store_next_item(si3)
-    si3.store_next_item(si4)
-    si4.store_next_item(si5)
+    si1.next(si2)
+    si2.next(si3)
+    si3.next(si4)
+    si4.next(si5)
 
-    items = Items()
+    item_store: List = List()
 
-    items.store_head(si1)
-    items.store_tail(si5)
+    item_store.store_head(si1)
+    item_store.store_tail(si5)
 
-    result = items.get_item_by_index(3)
+    result = item_store.get_item_by_index(3)
     print(result)
 
 
-def main5():
-    si1 = SingleItem()
+def main5() -> None:
+    si1: ListItem = ListItem()
     si1.add("a")
-    si2 = SingleItem()
+    si2: ListItem = ListItem()
     si2.add("b")
-    si3 = SingleItem()
+    si3: ListItem = ListItem()
     si3.add("c")
-    si4 = SingleItem()
+    si4: ListItem = ListItem()
     si4.add("d")
-    si5 = SingleItem()
+    si5: ListItem = ListItem()
     si5.add("e")
 
-    si1.store_next_item(si2)
-    si2.store_next_item(si3)
-    si3.store_next_item(si4)
-    si4.store_next_item(si5)
+    si1.next(si2)
+    si2.next(si3)
+    si3.next(si4)
+    si4.next(si5)
 
-    items = Items()
-    items.store_head(si1)
-    items.store_tail(si5)
+    item_store: List = List()
+    item_store.store_head(si1)
+    item_store.store_tail(si5)
 
-    items.remove_item(si5)
+    item_store.remove_item(si5)
 
-    for item in items:
+    for item in item_store:
         print(item)
 
 
