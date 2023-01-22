@@ -35,7 +35,7 @@ class ListItemsTests(unittest.TestCase):
         my_list.push(expected)
 
         # Act
-        retrieved = my_list.get_item_by_index(0)
+        retrieved = my_list.get(0)
 
         # Assert
         self.assertEqual(retrieved, expected)
@@ -61,7 +61,7 @@ class IndexTests(unittest.TestCase):
     @parameterized.expand([(0, "a"), (1, "b"), (2, "c")])
     def test_retrieve_by_index(self, index: int, expected_result: str):
         # Act
-        result = self.my_list.get_item_by_index(index)
+        result = self.my_list.get(index)
 
         # Assert
         self.assertEqual(expected_result, result)
@@ -72,7 +72,7 @@ class IndexTests(unittest.TestCase):
 
         # Act
         with self.assertRaises(IndexError):
-            self.my_list.get_item_by_index(invalid_index)
+            self.my_list.get(invalid_index)
 
     @parameterized.expand(
         [(0, "['b', 'c']", "a"), (1, "['a', 'c']", "b"), (2, "['a', 'b']", "c")]

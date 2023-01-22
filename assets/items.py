@@ -75,7 +75,7 @@ class List:
 
         return True
 
-    def get_item_by_index(self, index: int) -> ListItem | None:
+    def get(self, index: int) -> ListItem | None:
         """
         Retrieve an item by index.
 

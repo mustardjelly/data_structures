@@ -60,7 +60,7 @@ def main4() -> None:
     item_store.store_head(si1)
     item_store.store_tail(si5)
 
-    result = item_store.get_item_by_index(3)
+    result = item_store.get(3)
     print(result)
 
 
