@@ -1,7 +1,8 @@
 import unittest
 
-from typing import Any, List as TList
+from typing import Any, List as TList, Literal
 from parameterized import parameterized
+from assets.item import ListItem
 
 from assets.items import List
 
@@ -20,7 +21,7 @@ class ListItemsTests(unittest.TestCase):
     )
     def test_initialize_works(
         self, initialize_value: TList[Any], expected: str, expected_items: int
-    ):
+    ) -> None:
         # Act
         my_list: List = List(initialize_value)
 
@@ -31,62 +32,62 @@ class ListItemsTests(unittest.TestCase):
 
 class LengthTests(unittest.TestCase):
     @parameterized.expand([(List(["a", "b", "c"]), 3), (List([]), 0), (List(["a"]), 1)])
-    def test_length(self, test_list: List, expected_length: int):
+    def test_length(self, test_list: List, expected_length: int) -> None:
         # Act
-        result = len(test_list)
+        result: int = len(test_list)
 
         # Assert
         self.assertEqual(result, expected_length)
 
-    def test_length_push(self):
+    def test_length_push(self) -> None:
         # Arrange
-        test_list = List(["a", "b", "c"])
+        test_list: List = List(["a", "b", "c"])
         test_list.push("d")
-        expected_length = 4
+        expected_length: Literal[4] = 4
 
         # Act
-        result = len(test_list)
+        result: int = len(test_list)
 
         # Assert
         self.assertEqual(result, expected_length)
 
     @parameterized.expand(((0,), (1,), (2,)))
-    def test_length_pop(self, index: int):
+    def test_length_pop(self, index: int) -> None:
         # Arrange
-        test_list = List(["a", "b", "c"])
+        test_list: List = List(["a", "b", "c"])
         test_list.pop(index)
-        expected_length = 2
+        expected_length: Literal[2] = 2
 
         # Act
-        result = len(test_list)
+        result: int = len(test_list)
 
         # Assert
         self.assertEqual(result, expected_length)
 
 
 class PushTests(unittest.TestCase):
-    def test_push_works(self):
+    def test_push_works(self) -> None:
         # Arrange
         my_list: List = List()
-        expected = "value"
+        expected: Literal["value"] = "value"
         my_list.push(expected)
 
         # Act
-        retrieved = my_list.get(0)
+        retrieved: ListItem | None = my_list.get(0)
 
         # Assert
         self.assertEqual(retrieved, expected)
 
-    def test_push_works_on_initialized(self):
+    def test_push_works_on_initialized(self) -> None:
         # Arrange
         my_list: List = List(["a", "b", "c"])
-        x = "value"
+        x: Literal["value"] = "value"
 
         # Act
         my_list.push(x)
 
         # Assert
-        expected = "['a', 'b', 'c', 'value']"
+        expected: Literal["['a', 'b', 'c', 'value']"] = "['a', 'b', 'c', 'value']"
         self.assertEqual(str(my_list), expected)
 
 
@@ -96,16 +97,16 @@ class IndexTests(unittest.TestCase):
         return super().setUp()
 
     @parameterized.expand([(0, "a"), (1, "b"), (2, "c")])
-    def test_retrieve_by_index(self, index: int, expected_result: str):
+    def test_retrieve_by_index(self, index: int, expected_result: str) -> None:
         # Act
-        result = self.my_list.get(index)
+        result: ListItem | None = self.my_list.get(index)
 
         # Assert
         self.assertEqual(expected_result, result)
 
-    def test_retrieve_by_invalid_index(self):
+    def test_retrieve_by_invalid_index(self) -> None:
         # Arrange
-        invalid_index = 4
+        invalid_index: Literal[4] = 4
 
         # Act
         with self.assertRaises(IndexError):
@@ -125,29 +126,29 @@ class PopTests(unittest.TestCase):
         index: int,
         expected_str: str,
         expected_result: str,
-    ):
+    ) -> None:
         # Act
-        result = self.my_list.pop(index)
-        result_str = str(self.my_list)
+        result: int | None = self.my_list.pop(index)
+        result_str: str = str(self.my_list)
 
         # Assert
         self.assertEqual(result, expected_result)
         self.assertEqual(result_str, expected_str)
 
-    def test_remove_by_index_one_item(self):
+    def test_remove_by_index_one_item(self) -> None:
         # Arrange
-        single_item_list = List([1])
+        single_item_list: List = List([1])
         expected_result: int = 1
         expected_str: str = "[]"
 
         # Act
-        result = single_item_list.pop(0)
+        result: int | None = single_item_list.pop(0)
 
         # Assert
         self.assertEqual(expected_result, result)
         self.assertEqual(expected_str, str(single_item_list))
 
     @parameterized.expand([(List(),)])
-    def test_remove_by_invalid_index(self, initial_list: List):
+    def test_remove_by_invalid_index(self, initial_list: List) -> None:
         with self.assertRaises(IndexError):
             initial_list.pop(0)

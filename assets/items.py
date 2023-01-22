@@ -121,11 +121,11 @@ class List:
         """Removes an Item from the list by index"""
         self._is_index_valid(search_index)
 
-        current_index = 0
-        previous_node = None
-        current_node = self._head
-        next_node = current_node.next if current_node else None
-        removed = False
+        current_index: int = 0
+        previous_node: ListItem | None = None
+        current_node: ListItem | None = self._head
+        next_node: ListItem | None = current_node.next if current_node else None
+        removed: bool = False
 
         for node in self:
             if current_index == search_index:
