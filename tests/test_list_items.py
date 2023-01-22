@@ -21,27 +21,35 @@ class ListItemsTests(unittest.TestCase):
     def test_initialize_works(
         self, initialize_value: TList[Any], expected: str, expected_items: int
     ):
+        # Act
         my_list: List = List(initialize_value)
 
+        # Assert
         self.assertEqual(str(my_list), expected)
         self.assertEqual(len(my_list), expected_items)
 
     def test_append_works(self):
+        # Arrange
         my_list: List = List()
         expected = "value"
         my_list.push(expected)
 
+        # Act
         retrieved = my_list.get_item_by_index(0)
 
+        # Assert
         self.assertEqual(retrieved, expected)
 
     def test_append_works_on_initialized(self):
+        # Arrange
         my_list: List = List(["a", "b", "c"])
         x = "value"
+
+        # Act
         my_list.push(x)
 
+        # Assert
         expected = "['a', 'b', 'c', 'value']"
-
         self.assertEqual(str(my_list), expected)
 
 
@@ -52,13 +60,17 @@ class IndexTests(unittest.TestCase):
 
     @parameterized.expand([(0, "a"), (1, "b"), (2, "c")])
     def test_retrieve_by_index(self, index: int, expected_result: str):
+        # Act
         result = self.my_list.get_item_by_index(index)
 
+        # Assert
         self.assertEqual(expected_result, result)
 
     def test_retrieve_by_invalid_index(self):
+        # Arrange
         invalid_index = 4
 
+        # Act
         with self.assertRaises(IndexError):
             self.my_list.get_item_by_index(invalid_index)
 
@@ -71,9 +83,11 @@ class IndexTests(unittest.TestCase):
         expected_str: str,
         expected_result: str,
     ):
+        # Act
         result = self.my_list.pop(index)
         result_str = str(self.my_list)
 
+        # Assert
         self.assertEqual(result, expected_result)
         self.assertEqual(result_str, expected_str)
 
