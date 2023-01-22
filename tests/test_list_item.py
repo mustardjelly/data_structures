@@ -13,7 +13,7 @@ class ListItemTests(unittest.TestCase):
         x = ListItem("a")
 
         # Act
-        x.add("b")
+        x.value = "b"
 
         # Assert
         self.assertEqual(x.value, "b")

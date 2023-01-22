@@ -6,7 +6,7 @@ class ListItem:
     """An item in a list."""
 
     def __init__(self, value: Any) -> None:
-        self._value = value
+        self._value: Any | None = value
         self._next_item: ListItem | None = None
 
     def __str__(self) -> str:
@@ -18,7 +18,7 @@ class ListItem:
         return out_string
 
     @property
-    def value(self) -> Any:
+    def value(self) -> Any | None:
         """Get the value for the item."""
         return self._value
 
@@ -26,14 +26,6 @@ class ListItem:
     def value(self, value: Any) -> None:
         """Set the value for the item."""
         self._value = value
-
-    def add(self, value: Any) -> None:
-        """Set the value of our class"""
-        self._value = value
-
-    def get_added_value(self) -> Any | None:
-        """Retrieve the value of our class"""
-        return self._value
 
     @property
     def next(self) -> ListItem | None:
@@ -45,7 +37,7 @@ class ListItem:
         return self._next_item
 
     @next.setter
-    def next(self, next_item: ListItem) -> None:
+    def next(self, next_item: ListItem | None) -> None:
         """
         Store the next item.
         Lists use a single reference to the next item to allow for sequential reads.

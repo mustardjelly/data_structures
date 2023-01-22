@@ -12,7 +12,7 @@ class List:
     _head: None | ListItem = None
     _tail: None | ListItem = None
     _current: None | ListItem = None
-    _index: int = 0
+    _length = 0
 
     _current_repr: str = str()
 
@@ -36,6 +36,8 @@ class List:
 
             previous_item = current_item
 
+        self._length = number_of_arguments
+
     def __str__(self):
         if not self._head:
             return "[]"
@@ -49,7 +51,7 @@ class List:
         self._current = None
         return self
 
-    def __next__(self) -> ListItem:
+    def __next__(self) -> ListItem | None:
         if self.is_empty():
             raise StopIteration
 
@@ -64,11 +66,22 @@ class List:
 
         return self._current
 
+    def __len__(self) -> int:
+        return self._length
+
+    def _is_index_valid(self, index: int) -> bool:
+        if index >= self._length:
+            raise IndexError()
+
+        return True
+
     def get_item_by_index(self, index: int) -> ListItem | None:
         """
         Retrieve an item by index.
 
         Raises an IndexError if the index is invalid"""
+
+        self._is_index_valid(index)
 
         current_index = 0
 
@@ -79,8 +92,9 @@ class List:
             if current_index == index:
                 return node.value
 
-            if node.next is not None:
-                raise IndexError()
+            if node.next is None:
+                return None
+
             current_index += 1
 
     def store_head(self, head: ListItem | None) -> None:
@@ -103,27 +117,64 @@ class List:
         """Reports if the list is empty."""
         return self._head is None
 
-    def remove_item(self, delete_item: ListItem) -> None:
-        """Removes an Item from the list by Item"""
+    def pop(self, search_index: int) -> int | None:
+        """Removes an Item from the list by index"""
+        self._is_index_valid(search_index)
 
-        for item in self:
-            next_item = item.get_next_item()
-            if item is self._head:
-                if item is delete_item and next_item:
-                    self.store_head(next_item)
+        current_index = 0
+        previous_node = None
+        current_node = self._head
+        next_node = current_node.next if current_node else None
+        removed = False
+
+        for node in self:
+            if current_index == search_index:
+                # if first item
+                # remove head, set next to new head
+                if node == self._head:
+                    if next_node:
+                        self._head = next_node
+                    else:
+                        self._head = None
+
+                    removed = True
                     break
 
-            if next_item is delete_item:
-                if next_item is self._tail:
-                    self.store_tail(item)
+                # if normal
+                # set previous to next
+                elif node != self._tail:
+                    if previous_node:
+                        previous_node.next = next_node
+                    removed = True
                     break
 
-                item.next(delete_item.get_next_item())
-                break
+                # if last
+                # set tail to previous
+                # remove previous next
+                else:
+                    self._tail = previous_node
+                    removed = True
+                    if previous_node:
+                        previous_node.next = None
+                    break
 
-    def append(self, value_to_add: Any):
+            current_index += 1
+            if current_index > search_index:
+                return None
+
+            previous_node = current_node
+            current_node = next_node
+            next_node = current_node.next if current_node else None
+
+        if removed:
+            self._length -= 1
+            self._current_repr = ""
+            return current_node.value if current_node else None
+
+    def push(self, value_to_add: Any):
         """Append a value to our list of items."""
         item_to_add = ListItem(value_to_add)
+        self._length += 1
 
         if self._tail is not None:
             # If there is no tail, then there are no objects in our list
